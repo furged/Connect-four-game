@@ -11,7 +11,8 @@ def drop_piece():
 
 # this function is to check that if the location entered by thhe palyer is valid and its gonna check if the top row of that column is still emoty or not
 def is_valid_location(board, col):
-    pass
+    return board[5][col] == 0 # if this is true then we're good to let the player drop the piece in that column otherwise not
+    
 
 def get_next_open_row():
     pass
