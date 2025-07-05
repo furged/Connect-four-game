@@ -36,12 +36,18 @@ def winning_move(board, piece):
         for r in range(ROW_COUNT -3):
             if board[r][c] == piece and board[r+1][c] == piece and  board[r+2][c] == piece and  board[r+3][c] == piece:
                 return True
+            
+    #for positive slope diagonal  that will be ROW_COUNT-3 and COLUMN_COUNT-3
+    for c in range (COLUMN_COUNT-3): # we subtract 3 cus after 4th row from bottom no pattern of 4 can be formed vertically
+        for r in range(ROW_COUNT -3):
+            if board[r][c] == piece and board[r+1][c+1] == piece and  board[r+2][c+2] == piece and  board[r+3][c+3] == piece:
+                return True
+
+    # for negative slope diagnonal
 
 # to see what the board looks like:
 board = create_board()
 print_board(board)
-
-
 
 board = create_board()
 game_over = False # will only switch to true when someone gets 4 in a row
