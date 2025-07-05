@@ -4,7 +4,7 @@ ROW_COUNT = 6
 COLUMN_COUNT = 7
 
 def create_board():
-    board = np.zeros((6,7))  # , dtype = int) can also be added if we want integer zeros [0 instead of 0.]
+    board = np.zeros((ROW_COUNT, COLUMN_COUNT))  # , dtype = int) can also be added if we want integer zeros [0 instead of 0.]
     # zeros() is a method of np which creates a numpy array .. the shape is gonna be 6 rows and 7 columns. refer the output to see what it looks like 
     return board
 
@@ -14,7 +14,7 @@ def drop_piece(board, row, col, piece):
 
 # this function is to check that if the location entered by thhe palyer is valid and its gonna check if the top row of that column is still emoty or not
 def is_valid_location(board, col):
-    return board[5][col] == 0 # if this is true then we're good to let the player drop the piece in that column otherwise not
+    return board[ROW_COUNT-1][col] == 0 # if this is true then we're good to let the player drop the piece in that column otherwise not
     
 # to get the next open row in that column that we checked was valid/ to see what row the piece should go when the player selects the column
 def get_next_open_row(board, col):
@@ -25,6 +25,17 @@ def get_next_open_row(board, col):
 def print_board(board):
     print(np.flip(board, 0))
     
+def winning_move(board, piece):
+    #gonna check horizontal patterns if any
+    for c in range (COLUMN_COUNT-3): # we subtract 3 cus after 4th column no pattern of 4 can be formed hiorizontally as we are checking from left to right
+        for r in range(ROW_COUNT):
+            if board[r][c] == piece and board[r][c+1] == piece and  board[r][c+2] == piece and  board[r][c+3] == piece:
+                return True
+            
+    for c in range (COLUMN_COUNT): # we subtract 3 cus after 4th row from bottom no pattern of 4 can be formed vertically
+        for r in range(ROW_COUNT -3):
+            if board[r][c] == piece and board[r+1][c] == piece and  board[r+2][c] == piece and  board[r+3][c] == piece:
+                return True
 
 # to see what the board looks like:
 board = create_board()
@@ -43,7 +54,12 @@ while not game_over:
         #now we got the column, lets check that if location is valid:
         if is_valid_location(board, col):
             row = get_next_open_row(board, col)
+
             drop_piece(board, row, col, 1)
+
+            if winning_move(board, 1):
+                print("Player 1 Wins!")
+                game_over = True
         
 
     # ask for player 2 input
