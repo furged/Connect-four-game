@@ -1,4 +1,5 @@
 import numpy as np 
+import pygame 
 
 ROW_COUNT = 6
 COLUMN_COUNT = 7
@@ -46,12 +47,23 @@ def winning_move(board, piece):
             if board[r][c] == piece and board[r-1][c+1] == piece and  board[r-2][c+2] == piece and  board[r-3][c+3] == piece:
                 return True
 
-board = create_board()
-print_board(board)
+def draw_board(board):
+    pass
 
-board = create_board()
+board = create_board() 
 game_over = False 
 turn = 0 
+
+pygame.init()
+
+SQUARESIZE = 100
+
+width = COLUMN_COUNT * SQUARESIZE
+height = ROW_COUNT+1 * SQUARESIZE
+
+size = (width, height)
+
+screen = pygame.display.set_mode(size)
 
 while not game_over:
     
