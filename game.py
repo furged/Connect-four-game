@@ -77,6 +77,10 @@ turn = 0
 
 pygame.init()
 
+pygame.font.init()
+myfont = pygame.font.SysFont("monospace", 75)
+
+
 SQUARESIZE = 100
 
 width = COLUMN_COUNT * SQUARESIZE
@@ -118,9 +122,14 @@ while not game_over:
                 drop_piece(board, row, col, 1)
 
                 if winning_move(board, 1): 
-                    print("Player 1 Wins!")
+                    draw_board(board)
+                    label = myfont.render("Player 1 Wins!", 1, RED)
+                    screen.blit(label, (40,10))
+                    pygame.display.update()
                     game_over = True
-                
+                    
+
+
             else:
                 posx = event.pos[0]
 
@@ -130,12 +139,22 @@ while not game_over:
                     drop_piece(board, row, col, 2)
 
                 if winning_move(board, 2):
-                    print("Player 2 Wins!")
+                    draw_board(board)
+                    label = myfont.render("Player 2 Wins!", 1, YELLOW)
+                    screen.blit(label, (40,10))
+                    pygame.display.update()
                     game_over = True
+                    
+
+
                 
 
             print_board(board)
-            draw_board(board)
+            if not game_over:
+                draw_board(board)
             
             turn += 1
             turn = turn % 2 
+
+            if game_over:
+                pygame.time.wait(5000)
